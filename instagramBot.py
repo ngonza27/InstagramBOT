@@ -4,9 +4,9 @@ import time
 
 class InstagramBot:
     def __init__(self, usuario, contrasena):
-        self.usuario = usuario
+        self.usuario    = usuario
         self.contrasena = contrasena
-        self.driver = webdriver.Firefox()
+        self.driver     = webdriver.Firefox()
 
     def closeBrowser(self):
         self.driver.close( )
@@ -31,35 +31,27 @@ class InstagramBot:
         driver = self.driver
         driver.get("https://www.instagram.com/explore/tags/" + hashtag + "/")
         time.sleep(5)
-        print('hola')
 
-        for i in range(1,5):
+        for i in range(1,1):
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(3)
 
         hrefs = driver.find_elements_by_tag_name('a')
         hrefsFotos = [elem.get_attribute('href') for elem in hrefs]
-        #hrefsFotos = [print(href) for href in hrefsFotos if hashtag in hrefs]
         print(hrefsFotos)
         for hrefsFotos in hrefsFotos:
+            if hrefsFotos == 'https://www.instagram.com/':
+                break
             driver.get(hrefsFotos)
-            print("no entra al like")
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            print("nada")
             try:
-                print("nel")
                 driver.find_element_by_xpath('/html/body/span/section/main/div/div/article/div[2]/section[1]/span[1]/button/span[@aria-label="Like"]').click()
-                print("like")
-                print("tiempo iniccio")
                 time.sleep(1)
-                print("tiempo salida")
             except Exception as e:
-                print("ya salio")
                 time.sleep(2)
 
-# Fill username and password with the respecrive fields
-ig = InstagramBot("username","password")
+ig = InstagramBot("testofthetest01","hola123456_")
 ig.login()
 
-hashtags = ['monuments']
+hashtags = ['mar', 'perros']
 [ig.darLike(tag) for tag in hashtags]
