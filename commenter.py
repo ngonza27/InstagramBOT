@@ -44,18 +44,26 @@ class Commentor:
         hrefsFotos = [elem.get_attribute('href') for elem in hrefs]
         return(hrefsFotos)
 
-    def escribir_comentario(self, coment_text):
+    def escribir_comentario(self, comment_text):
         try:
-            comment_button = self.driver.find_element_by_xpath('/html/body/span/section/main/div/div/article/div[2]/section[1]/span[1]/button/span[@aria-label="Comment"]')
-            comment_button.click()
+            comment_button = lambda: self.driver.find_element_by_link_text('Comment')
+            comment_button().click()
         except NoSuchElementException:
             pass
-        
+
         try:
-            cuadro_comentario = self.driver.find_element_by_xpath("//textarea [@aria-label='Add a comment…']")
-            #uadro_comentario.clear()
-            #cuadro_comentario.send_keys("hola")
-            #cuadro.clear()
+            comment_box_elem = lambda: self.driver.find_element_by_xpath("//textarea[@aria-label='Add a comment…']")
+            comment_box_elem().click()
+            comment_box_elem().send_keys('')
+            comment_box_elem = lambda: self.driver.find_element_by_xpath("//textarea[@aria-label='Add a comment…']")
+            comment_box_elem().click()
+            comment_box_elem().send_keys('')
+            comment_box_elem().clear()
+            for letter in comment_text:
+                print("AAAAAAAAAAAAAAAAAAAa")
+                comment_box_elem().send_keys(letter)
+                time.sleep((random.randint(1, 7) / 30))
+
         except NoSuchElementException and StaleElementReferenceException as e:
             print(e)
 
@@ -63,5 +71,5 @@ com = Commentor(usuario="testofthetest01",contrasena="hola123456_")
 com.login()
 #pictures = com.obtener_fotos(hashtag="hola", scrolls=2)
 #print(pictures)
-com.driver.get("https://www.instagram.com/p/B1v5L2Ijal0/")
-com.escribir_comentario("asd")
+com.driver.get("https://www.instagram.com/p/B19Ws73ByNj/")
+com.escribir_comentario(comment_text="hola como estas hoy?")
