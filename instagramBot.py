@@ -53,5 +53,5 @@ class InstagramBot:
 ig = InstagramBot("testofthetest01","hola123456_")
 ig.login()
 
-hashtags = ['mar', 'perros']
+hashtags = ['mar', 'gatos']
 [ig.darLike(tag) for tag in hashtags]
