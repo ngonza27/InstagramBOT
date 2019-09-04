@@ -1,4 +1,4 @@
 # InstagramBOT
 
 
-Install **selenium** and add **geckodriver** to you **PATH**
+## Install **selenium** and add **geckodriver** to you **PATH**
