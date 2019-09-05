@@ -13,9 +13,10 @@ class Commentor:
         self.driver     = webdriver.Firefox()
         self.driver.set_window_size(450,500)
 
-    def closeBrowser(self):
+    def close_browser(self):
         self.driver.close( )
     
+
     def login(self):
         driver = self.driver
         driver.get("https://www.instagram.com/")
@@ -32,6 +33,7 @@ class Commentor:
         loginContrasena.send_keys(Keys.RETURN)
         time.sleep(5)
 
+
     def obtener_fotos(self, hashtag, scrolls=int):
         self.driver.get("https://www.instagram.com/explore/tags/" + hashtag + "/")
         time.sleep(5)
@@ -44,6 +46,7 @@ class Commentor:
         hrefsFotos = [elem.get_attribute('href') for elem in hrefs]
         return(hrefsFotos)
 
+
     def escribir_comentario(self, comment_text):
         try:
             comment_button = lambda: self.driver.find_element_by_link_text('Comment')
@@ -52,9 +55,6 @@ class Commentor:
             pass
 
         try:
-            comment_box_elem = lambda: self.driver.find_element_by_xpath("//textarea[@aria-label='Add a comment…']")
-            comment_box_elem().click()
-            comment_box_elem().send_keys('')
             comment_box_elem = lambda: self.driver.find_element_by_xpath("//textarea[@aria-label='Add a comment…']")
             comment_box_elem().click()
             comment_box_elem().send_keys('')
@@ -72,4 +72,4 @@ com.login()
 #pictures = com.obtener_fotos(hashtag="hola", scrolls=2)
 #print(pictures)
 com.driver.get("https://www.instagram.com/p/B19Ws73ByNj/")
-com.escribir_comentario(comment_text="hola como estas hoy?")
+com.escribir_comentario(comment_text="hola como estas hoy  asdasd")
