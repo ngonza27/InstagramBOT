@@ -7,11 +7,11 @@ import re
 
 class Commentor:
 
+
     def __init__(self, usuario, contrasena):
         self.usuario    = usuario
         self.contrasena = contrasena
         self.driver     = webdriver.Firefox()
-        self.driver.set_window_size(450,500)
 
     def close_browser(self):
         self.driver.close( )
@@ -48,6 +48,7 @@ class Commentor:
 
 
     def escribir_comentario(self, comment_text):
+        print("entro al comentario")
         try:
             comment_button = lambda: self.driver.find_element_by_link_text('Comment')
             comment_button().click()
@@ -60,16 +61,28 @@ class Commentor:
             comment_box_elem().send_keys('')
             comment_box_elem().clear()
             for letter in comment_text:
-                print("AAAAAAAAAAAAAAAAAAAa")
                 comment_box_elem().send_keys(letter)
                 time.sleep((random.randint(1, 7) / 30))
 
+            return comment_box_elem
+
         except NoSuchElementException and StaleElementReferenceException as e:
             print(e)
+            return False
+        
+    def post_comment(self, comment_text):
+        time.sleep(random.randint(1, 5))
+        comment_box_elem = self.escribir_comentario(comment_text)
+        if comment_text in self.driver.page_source:
+            comment_box_elem().send_keys(Keys.ENTER)
+        time.sleep(random.randint(4, 7))
+        self.driver.refresh()
+
+        if comment_text in self.driver.page_source:
+            return True
+        return False
 
 com = Commentor(usuario="testofthetest01",contrasena="hola123456_")
 com.login()
-#pictures = com.obtener_fotos(hashtag="hola", scrolls=2)
-#print(pictures)
 com.driver.get("https://www.instagram.com/p/B19Ws73ByNj/")
-com.escribir_comentario(comment_text="hola como estas hoy  asdasd")
+com.post_comment(comment_text="hola como estamos!")
