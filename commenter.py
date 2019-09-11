@@ -82,7 +82,18 @@ class Commentor:
             return True
         return False
 
+    def comment_on_picture(self):
+        response = "HOLA!"
+        return self.post_comment(response)
+        
 com = Commentor(usuario="testofthetest01",contrasena="hola123456_")
 com.login()
-com.driver.get("https://www.instagram.com/p/B19Ws73ByNj/")
-com.post_comment(comment_text="hola como estamos!")
+
+for pic in com.obtener_fotos(hashtag='newyork', scrolls=1)[1:]:
+    com.driver.get(pic)
+    time.sleep(3)
+    print('Posted Comment:', com.comment_on_picture())
+    time.sleep(3)
+
+# com.driver.get("https://www.instagram.com/p/B19Ws73ByNj/")
+# com.post_comment(comment_text="que pasa!")
