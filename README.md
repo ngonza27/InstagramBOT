@@ -1,7 +1,9 @@
 # InstagramBOT
 
 ~~~
- Install selenium and add geckodriver to you PATH
+ Download geckodriver and add it to you PATH.
+ $pip install selenium
+ $pip install chatterbot
 ~~~
 
 Credits (c): **tacomonster**
