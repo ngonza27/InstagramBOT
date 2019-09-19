@@ -45,7 +45,7 @@ class InstagramBot:
             driver.get(hrefsFotos)
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             try:
-                driver.find_element_by_xpath('/html/body/span/section/main/div/div/article/div[2]/section[1]/span[1]/button/span[@aria-label="Like"]').click()
+                driver.find_element_by_xpath('/html/body/span/section/main/div/div/article/div[2]/section[1]/span[1]/button/span[@aria-label="Me gusta"]').click()
                 time.sleep(1)
             except Exception as e:
                 time.sleep(2)

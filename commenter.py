@@ -4,6 +4,9 @@ from selenium import webdriver
 import random
 import time
 import re
+from chatterbot.trainers import ListTrainer
+from chatterbot import ChatBot
+
 
 class Commentor:
 
@@ -56,14 +59,14 @@ class Commentor:
             pass
 
         try:
-            comment_box_elem = lambda: self.driver.find_element_by_xpath("//textarea[@aria-label='Add a comment…']")
+            #comment_box_elem = lambda: self.driver.find_element_by_xpath("//textarea[@aria-label='Add a comment…']")
+            comment_box_elem = lambda: self.driver.find_element_by_xpath("//textarea[@aria-label='Añade un comentario...']")
             comment_box_elem().click()
             comment_box_elem().send_keys('')
             comment_box_elem().clear()
             for letter in comment_text:
                 comment_box_elem().send_keys(letter)
                 time.sleep((random.randint(1, 7) / 30))
-
             return comment_box_elem
 
         except NoSuchElementException and StaleElementReferenceException as e:
@@ -82,18 +85,46 @@ class Commentor:
             return True
         return False
 
+
+    def get_comments(self):
+        time.sleep(3)
+        try:
+            comments_block = self.driver.find_element_by_class_name('EtaWk')
+            comments_in_block = comments_block.find_elements_by_class_name('C4VMK')
+            comments = [x.find_element_by_tag_name('span') for x in comments_in_block]
+            user_comment = re.sub(r'#.\w*|\.', '', comments[0].text)
+        except NoSuchElementException and StaleElementReferenceException as e:
+            print(e)
+            return ''
+        return user_comment     
+    
+
+    def like_photo(self):
+        self.driver.find_element_by_xpath('/html/body/span/section/main/div/div/article/div[2]/section[1]/span[1]/button/span[@aria-label="Me gusta"]').click()
+        time.sleep(1)
+    
     def comment_on_picture(self):
-        response = "HOLA!"
+        bot = ChatBot('ChatBot1')
+        bot.set_trainer(ListTrainer)
+        picture_comment = self.get_comments()
+        response = bot.get_response(picture_comment).__str__()
+        print("User's commnet:", picture_comment)
+        print("Bot response:", response)
         return self.post_comment(response)
-        
+
 com = Commentor(usuario="testofthetest01",contrasena="hola123456_")
 com.login()
 
-for pic in com.obtener_fotos(hashtag='newyork', scrolls=1)[1:]:
+for pic in com.obtener_fotos(hashtag='tso061', scrolls=1)[1:]:
     com.driver.get(pic)
-    time.sleep(3)
+    time.sleep(2)
+    com.like_photo()
     print('Posted Comment:', com.comment_on_picture())
-    time.sleep(3)
-
-# com.driver.get("https://www.instagram.com/p/B19Ws73ByNj/")
+    time.sleep(2)
+com.close_browser()
+#time.sleep(3)
+#com.driver.get("https://www.instagram.com/p/B2LwdAZFDkE/")
+#time.sleep(2)
 # com.post_comment(comment_text="que pasa!")
+#print(com.get_comments())
+#print("Posted commnet:", com.comment_on_picture())  
