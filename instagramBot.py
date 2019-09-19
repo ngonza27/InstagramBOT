@@ -50,7 +50,7 @@ class InstagramBot:
             except Exception as e:
                 time.sleep(2)
 
-ig = InstagramBot("testofthetest01","hola123456_")
+ig = InstagramBot("username","password")
 ig.login()
 
 hashtags = ['mar', 'gatos']
