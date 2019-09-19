@@ -112,7 +112,7 @@ class Commentor:
         print("Bot response:", response)
         return self.post_comment(response)
 
-com = Commentor(usuario="testofthetest01",contrasena="hola123456_")
+com = Commentor(usuario="username",contrasena="password")
 com.login()
 
 for pic in com.obtener_fotos(hashtag='tso061', scrolls=1)[1:]:
@@ -122,9 +122,3 @@ for pic in com.obtener_fotos(hashtag='tso061', scrolls=1)[1:]:
     print('Posted Comment:', com.comment_on_picture())
     time.sleep(2)
 com.close_browser()
-#time.sleep(3)
-#com.driver.get("https://www.instagram.com/p/B2LwdAZFDkE/")
-#time.sleep(2)
-# com.post_comment(comment_text="que pasa!")
-#print(com.get_comments())
-#print("Posted commnet:", com.comment_on_picture())  
