@@ -1,6 +1,6 @@
 # InstagramBOT
 
-It is all based on Hashtags(**#**)
+It's all based on Hashtags(**#**)
 
 ~~~
 Available scripts:
