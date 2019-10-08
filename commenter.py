@@ -16,10 +16,12 @@ class Commentor:
         self.contrasena = contrasena
         self.driver     = webdriver.Firefox()
 
+
     def close_browser(self):
         self.driver.close( )
-    
 
+
+    #Log in to the Instagram account
     def login(self):
         driver = self.driver
         driver.get("https://www.instagram.com/")
@@ -103,6 +105,7 @@ class Commentor:
         self.driver.find_element_by_xpath('/html/body/span/section/main/div/div/article/div[2]/section[1]/span[1]/button/span[@aria-label="Me gusta"]').click()
         time.sleep(1)
     
+    
     def comment_on_picture(self):
         bot = ChatBot('ChatBot1')
         bot.set_trainer(ListTrainer)
@@ -112,7 +115,7 @@ class Commentor:
         print("Bot response:", response)
         return self.post_comment(response)
 
-com = Commentor(usuario="username",contrasena="password")
+com = Commentor(usuario="USERNAME",contrasena="PASSWORD")
 com.login()
 
 for pic in com.obtener_fotos(hashtag='tso061', scrolls=1)[1:]:
