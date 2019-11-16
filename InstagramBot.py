@@ -129,7 +129,7 @@ class InstagramBot:
 
 
 
-com = InstagramBot(usuario="testofthetest01",contrasena="hola123456_") #Instagram account credentials
+com = InstagramBot(usuario="username",contrasena="password") #Instagram account credentials
 com.login()
 for pic in com.obtener_fotos(hashtag='purple', scrolls=2)[1:]:
     com.driver.get(pic)
